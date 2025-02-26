@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq
+    restart: always
+    environment:
+      - .env
+    ports:
+      - "5673:5672" # Porta ajustada corretamente para comunicação
+      - "15673:15672" # Porta ajustada corretamente para o painel
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+volumes:
+  rabbitmq_data:
+    driver: local

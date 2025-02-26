@@ -1,4 +1,8 @@
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "src")))
 from typing import Dict
+from setup import RABBITMQ
 import pika
 import json
 
@@ -6,12 +10,12 @@ import json
 class RabbitmqPublisher:
     def __init__(
             self,
-            host="env",
-            port="env",
-            username="env",
-            password="env",
-            exchange="env",
-            routing_key="env"):
+            host=RABBITMQ['host'],
+            port=RABBITMQ['port'],
+            username=RABBITMQ['username'],
+            password=RABBITMQ['password'],
+            exchange=RABBITMQ['exchange'],
+            routing_key=RABBITMQ['routing_key']):
         self.__host = host
         self.__port = port
         self.__username = username
