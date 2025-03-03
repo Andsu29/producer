@@ -27,7 +27,7 @@ class RabbitmqPublisher:
     def __create_channel(self):
         connection_parameters = pika.ConnectionParameters(
             host=self.__host,
-            port=self.__port,
+            port=int(self.__port),
             credentials=pika.PlainCredentials(
                 username=self.__username,
                 password=self.__password
@@ -46,6 +46,3 @@ class RabbitmqPublisher:
                 delivery_mode=2
             )
         )
-
-# Provavelmente vou precisar colocar valores dinamicos nos parametros do init
-# Para assim poder reaproveitar o código para publicar em outras filas

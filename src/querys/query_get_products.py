@@ -5,5 +5,5 @@ def query_get_all_products():
 
 def query_update_publish(id):
     return f"""
-    UPDATE produtos SET publicado=True where id={id};
+    UPDATE produtos SET publicado=1 where id={id};
 """
