@@ -1,18 +1,23 @@
-version: "3.8"
-
 services:
-  rabbitmq:
-    image: rabbitmq:3.12-management
-    container_name: rabbitmq
+  python-app:
+    build: .
+    container_name: python-app
     restart: always
-    environment:
+    env_file:
       - .env
-    ports:
-      - "5673:5672" # Porta ajustada corretamente para comunicação
-      - "15673:15672" # Porta ajustada corretamente para o painel
     volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
+      - integrador_data:/var/lib/python-app
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - rabbitmq_rabbitmq_network
+      - api_erp_mynetwork
 
 volumes:
-  rabbitmq_data:
-    driver: local
+  integrador_data:
+
+networks:
+  rabbitmq_rabbitmq_network:
+    external: true
+  api_erp_mynetwork:
+    external: true
