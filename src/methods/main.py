@@ -33,19 +33,14 @@ class GetPublish():
 
     def publish_queue(self):
         products = self.get_products()
+        contador = 0
 
         if products:
             for product in products:
                 if not product['publicado']:
                     self.rabbitmq_publisher.send_message(product)
                     self.update_publish(product['id'])
+                    contador += 1
+                    print(f"{contador} Produtos publicados!")
                 else:
-                    print("Produto já publicado!")
-            
-            # Preciso fazer uma validação - ok
-            # Adicionar uma coluna no banco de publicado
-            # esse publicado vai ser verificado aqui
-            # para que se publicado for true ele não vai para a fila
-            # pois ja foi publicado
-            # após publicar o produto na fila deve marcar ele como publicado
-            # assim não vai ficar repetindo produto
+                    pass

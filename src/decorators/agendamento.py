@@ -1,15 +1,20 @@
 import schedule
 import time
+import traceback
 
 def loop(f):
     try:
-        schedule.every(5).seconds.do(f)
-
+        print("Iniciando loop...")
+        schedule.every(1).minutes.do(f)
+        print("Antes do While...")
         while True:
+            print("Dentro do While 1...")
             schedule.run_pending()
+            print("Dentro do While 2...")
             time.sleep(1) 
     except Exception as e:
-        print(e)
+        print(f"Erro no loop: {e}")
+        print(traceback.format_exc())
 
 
 # Módulo onde o schendule irá executar a função principal recebendo da função decorada
