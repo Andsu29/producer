@@ -1,12 +1,12 @@
 services:
-  python-app:
+  producer:
     build: .
-    container_name: python-app
+    container_name: producer
     restart: always
     env_file:
       - .env
     volumes:
-      - integrador_data:/var/lib/python-app
+      - producer_data:/var/lib/producer
     environment:
       - PYTHONUNBUFFERED=1
     networks:
@@ -14,7 +14,7 @@ services:
       - api_erp_mynetwork
 
 volumes:
-  integrador_data:
+  producer_data:
 
 networks:
   rabbitmq_rabbitmq_network:
