@@ -1,6 +1,7 @@
 from connection.main import Conn
 from rabbitmq.publisher import RabbitmqPublisher
 from querys.query_get_products import query_get_all_products, query_update_publish
+import base64
 
 
 class GetPublish():
@@ -33,14 +34,32 @@ class GetPublish():
 
     def publish_queue(self):
         products = self.get_products()
-        contador = 0
+        contador_prontos = 0
+        contador_pendentes = 0
 
         if products:
             for product in products:
-                if not product['publicado']:
-                    self.rabbitmq_publisher.send_message(product)
-                    self.update_publish(product['id'])
-                    contador += 1
-                    print(f"{contador} Produtos publicados!")
+                if not product['publicado'] and product["imagens"]:
+                    imagem_base64 = None
+                    imagem_base64 = base64.b64encode(product['imagens']).decode("utf-8")
+                    produto_formatado =    {
+                                "id":  product["id"],
+                                "titulo": product["titulo"],
+                                "publicado": product["publicado"],
+                                "descricao": product["descricao"],
+                                "preco": product["preco"],
+                                "categoria": product["categoria"],
+                                "marca": product["marca"],
+                                "modelo": product["modelo"],
+                                "codpro": product["codpro"],
+                                "imagens": imagem_base64
+                            }
+                    self.rabbitmq_publisher.send_message(produto_formatado)
+                    self.update_publish(produto_formatado['id'])
+                    contador_prontos += 1
+                    print(f"{contador_prontos} Produtos publicados!")
+                elif not product["imagens"]:
+                    contador_pendentes += 1
+                    print(f"{contador_pendentes} Produtos pendentes para serem publicados!")
                 else:
                     pass
