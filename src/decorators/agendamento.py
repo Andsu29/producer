@@ -5,7 +5,7 @@ import traceback
 def loop(f):
     try:
         print("Iniciando loop...")
-        schedule.every(1).minutes.do(f)
+        schedule.every(10).seconds.do(f)
         print("Antes do While...")
         while True:
             print("Dentro do While 1...")

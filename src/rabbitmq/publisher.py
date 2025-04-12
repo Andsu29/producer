@@ -35,6 +35,11 @@ class RabbitmqPublisher:
         )
 
         channel = pika.BlockingConnection(connection_parameters).channel()
+        channel.exchange_declare(
+            exchange=self.__exchange,
+            exchange_type='direct',
+            durable=True
+        )
         return channel
 
     def send_message(self, body: Dict):
