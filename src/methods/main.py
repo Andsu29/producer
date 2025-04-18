@@ -62,4 +62,4 @@ class GetPublish():
                     contador_pendentes += 1
                     print(f"{contador_pendentes} Produtos pendentes para serem publicados!")
                 else:
-                    pass
+                    print("Nenhum produto para ser publicado!")
